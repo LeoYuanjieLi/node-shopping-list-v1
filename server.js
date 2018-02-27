@@ -9,7 +9,8 @@ const bodyParser = require('body-parser');
 // we import the ShoppingList model, which we'll
 // interact with in our GET endpoint
 const {ShoppingList} = require('./models');
-
+const {Recipes} = require('./models');
+// what does this line do?
 const jsonParser = bodyParser.json();
 const app = express();
 
@@ -24,12 +25,24 @@ app.use(morgan('common'));
 ShoppingList.create('beans', 2);
 ShoppingList.create('tomatoes', 3);
 ShoppingList.create('peppers', 4);
+// -----------my code here ------------- 1 //
+Recipes.create('chocolate milk', ['cocoa', 'milk', 'sugar']);
 
 // when the root of this route is called with GET, return
 // all current ShoppingList items by calling `ShoppingList.get()`
 app.get('/shopping-list', (req, res) => {
   res.json(ShoppingList.get());
 });
+
+// -----------my code here-------------------- 2 //
+
+
+
+app.get('/recipes', (req, res)=>{
+	res.json(Recipes.get());
+});
+
+
 
 app.listen(process.env.PORT || 8080, () => {
   console.log(`Your app is listening on port ${process.env.PORT || 8080}`);
